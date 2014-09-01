@@ -25,7 +25,8 @@ $app = new Illuminate\Foundation\Application;
 */
 
 $env = $app->detectEnvironment(function () {
-	'HiepLaptop' => array('NguyenHiep-Lap'),\
+    return require __DIR__.'/environment.php';
+	//'HiepLaptop' => array('NguyenHiep-Lap'),\
 });
 
 /*
