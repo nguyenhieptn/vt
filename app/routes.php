@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/','dashboard@index');
 
 Route::resource('units', 'UnitsController');
