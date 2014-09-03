@@ -12,5 +12,11 @@
 */
 
 Route::get('/','dashboard@index');
+Route::get('/dashboard','dashboard@index');
+Route::get('/login','UserController@login');
+Route::post('/actionlogin','UserController@doLogin');
+Route::get('/logout','UserController@logout');
 
-Route::resource('units', 'UnitsController');
+Route::group(array("before"=>"Sentry|inGroup:Admin"), function(){
+    Route::resource("units","UnitsController");
+});
