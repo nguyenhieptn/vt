@@ -73,13 +73,12 @@
             <h1>Member Login</h1>
 
             <div class="login-fields">
-
                 <p>Please provide your details</p>
-                {{-- Show error --}}
-                {{ $errors->first('email') }}
-                {{ $errors->first('password') }}
-
-
+                @if($errors->has())
+                @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+                @endforeach
+                @endif
                 <div class="field">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" value="" placeholder="Username" class="login username-field" />
