@@ -5,14 +5,14 @@
         <ul class="mainnav">
 
             <li>
-                <a href="index.html">
+                <a href="{{ URL::to('dashboard') }}">
                     <i class="icon-dashboard"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="units">
-                    <i class="icon-group"></i>
+                <a href="{{ URL::route('units.index') }}">
+                    <i class="icon-table "></i>
                     <span>{{ trans("gen.unit") }}</span>
                 </a>
             </li>

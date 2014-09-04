@@ -13,7 +13,6 @@
     {{ HTML::style('http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600') }}
     {{ HTML::style('css/font-awesome.css') }}
     {{ HTML::style('css/style.css') }}
-    {{ HTML::style('css/pages/plans.css') }}
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     {{ HTML::script('http://html5shim.googlecode.com/svn/trunk/html5.js') }}

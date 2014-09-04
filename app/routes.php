@@ -12,7 +12,7 @@
 */
 
 Route::get('/','dashboard@index');
-Route::get('/dashboard','dashboard@index');
+Route::get('dashboard',['as'=>'dashboard','uses'=>'dashboard@index']);
 Route::get('/login','UserController@login');
 Route::post('/actionlogin','UserController@doLogin');
 Route::get('/logout','UserController@logout');

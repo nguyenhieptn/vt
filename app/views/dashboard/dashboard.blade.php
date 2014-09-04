@@ -3,6 +3,15 @@
 <div class="row">
 
     <div class="span12">
+        @if($errors->has())
+        @foreach ($errors->all() as $error)
+        <div class="alert">s
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Warning! {{ $error }}</strong>
+        </div>
+        @endforeach
+        @endif
+
 
         <div class="widget">
 

@@ -16,6 +16,15 @@ class SentrySeeder extends Seeder {
             'activated'   => 1,
         ));
 
+        $user2 = Sentry::createUser(array(
+            'email'       => 'mod@mod.com',
+            'username'       => 'mod',
+            'password'    => "mod",
+            'first_name'  => 'John',
+            'last_name'   => 'nguyen',
+            'activated'   => 1,
+        ));
+
         $group = Sentry::createGroup(array(
             'name'        => 'Admin',
             'permissions' => array(
