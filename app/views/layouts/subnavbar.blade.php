@@ -3,7 +3,6 @@
     <div class="container">
 
         <ul class="mainnav">
-
             <li>
                 <a href="{{ URL::to('dashboard') }}">
                     <i class="icon-dashboard"></i>
@@ -18,9 +17,9 @@
             </li>
 
             <li>
-                <a href="reports.html">
-                    <i class="icon-list-alt"></i>
-                    <span>Reports</span>
+                <a href="{{ URL::to('users') }}">
+                    <i class="icon-group"></i>
+                    <span>{{ trans("gen.users") }}</span>
                 </a>
             </li>
 

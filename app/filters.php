@@ -101,7 +101,7 @@ Route::filter('csrf', function()
 Route::filter('Sentry', function()
 {
     if ( ! Sentry::check()) {
-        return Redirect::route('dashboard');
+        return Redirect::to('login');
     }
 });
 

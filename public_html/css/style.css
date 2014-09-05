@@ -1284,3 +1284,18 @@ color: #333;
 	
 }
 
+
+/*action fix */
+td.td-actions a{
+    float:left
+}
+td.td-actions form{
+    float: left;
+    margin: 0 5px;
+}
+td.td-actions form button{
+    line-height: 1;
+    padding: 4px 15px;
+}
+
+

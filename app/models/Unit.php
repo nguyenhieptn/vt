@@ -8,6 +8,11 @@ class Unit extends \Eloquent {
 	];
 
 	// Don't forget to fill this array
-	protected $fillable = ['name'];
-
+	protected $fillable = ['name','unit_type'];
+    
+    //relationship to users table pivot user
+    public function users()
+    {
+        $this->belongsToMany('user');
+    }
 }

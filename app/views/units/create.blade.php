@@ -14,19 +14,17 @@
                 </div>
                 <!-- /widget-header -->
                 <div class="widget-content">
-                    @if($errors->has())
-                    @foreach ($errors->all() as $error)
-                    <ul>
-                        <li>{{ $error }}</li>
-                    </ul>
-                    @endforeach
-                    @endif
                     {{ Form::open(array('url'=>'units','class'=>'form-horizontal')) }}
                     <fieldset>
                     <br />
                     <label class="control-label" for="name">{{ trans("gen.unit name") }}</label>
                     <div class="controls">
                         <input class="span6" id="name" name="name" value="{{ Input::old('name') }}" type="text">
+                    </div> <!-- /controls -->
+                    <br />
+                    <label class="control-label" for="name">{{ trans("gen.unit type") }}</label>
+                    <div class="controls">
+                        {{ Form::select('unit_type', array('Đơn vị' => 'Đơn vị', 'Phòng ban' => 'Phòng ban'), Input::old('unit_type')) }}
                     </div> <!-- /controls -->
 
                     <button type="submit" class="btn btn-success">{{ trans("gen.save") }}</button>

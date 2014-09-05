@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-/*		$this->call('SentrySeeder');
-        $this->command->info('Sentry tables seeded!');*/
+		$this->call('SentrySeeder');
+        $this->command->info('Sentry tables seeded!');
 	}
 
 }

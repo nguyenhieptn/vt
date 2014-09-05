@@ -33,8 +33,23 @@
     <div class="main-inner">
 
         <div class="container">
+            @if($errors->has())
+            <div class="row">
+                <div class="span12">
+                <div class="alert alert-block">
+                    <button data-dismiss="alert" class="close" type="button">×</button>
+                    @foreach ($errors->all() as $error)
+                    <ul>
+                        <li>{{ $error }}</li>
+                    </ul>
+                    @endforeach
+                </div>
+                </div>
+            </div>
+            @endif
 
-        @yield("content")
+
+            @yield("content")
 
         </div> <!-- /container -->
 

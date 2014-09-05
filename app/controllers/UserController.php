@@ -10,7 +10,11 @@ class UserController extends \BaseController {
 	 */
 	public function login()
 	{
-        return View::make("users.login");
+        if ( Sentry::check()) {
+            return Redirect::route('dashboard');
+        }else {
+            return View::make("users.login");
+        }
 	}
 
     public function doLogin()
@@ -64,9 +68,14 @@ class UserController extends \BaseController {
             }
 
             return Redirect::intended('dashboard');
-            // validation not successful, send back to form
-
         }
+    }
+
+    public function index()
+    {
+        $users = Sentry::findAllUsers();
+
+        return View::make('users.index')->with(compact('users'));
     }
 
 	public function logout()
@@ -83,19 +92,51 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+        try
+        {
+            $user = Input::except('_token','units','group');
+            //var_dump($user);exit;
+            // Create the user
+            $user = Sentry::createUser($user);
+
+            // Find the group using the group id
+            $userGroup = Sentry::findGroupByName(Input::get('group'));
+
+            // Assign the group to the user
+            $user->addGroup($userGroup);
+
+            // assign units user pivot, since the syntry uloquent doesn't support, we need to use extenders one
+            $units = Input::get("units");
+            if(count($units)) {
+                foreach($units as $u){
+                    User::find($user->id)->units()->attach($u);
+                }
+            }
+        }
+        catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+        {
+            return Redirect::to("users/create")->withErrors('gen.Login field is required.')->withInput(Input::except('_token','password'));
+        }
+        catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
+        {
+            return Redirect::to("users/create")->withErrors('gen.Password field is required.')->withInput(Input::except('_token','password'));
+        }
+        catch (Cartalyst\Sentry\Users\UserExistsException $e)
+        {
+            return Redirect::to("users/create")->withErrors('gen.User with this login already exists.');
+        }
+        catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+        {
+            return Redirect::to("users/create")->withErrors('gen.Group was not found.');
+        }
+
+        return Redirect::to("users")->withErrors("gen.Success create user");
 	}
 
-	/**
-	 * Display the specified resource.
-	 * GET /user/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
+	public function create()
 	{
-		//
+        $units = Unit::orderBy('unit_type')->get(['id','name']);
+		return View::make('users.create',compact('units'));
 	}
 
 	/**
@@ -131,7 +172,19 @@ class UserController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+        try
+        {
+            // Find the user using the user id
+            $user = Sentry::findUserById($id);
+
+            // Delete the user
+            $user->delete();
+            return Redirect::to("users")->withErrors("gen.Success delete");
+        }
+        catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            return Redirect::to("users")->withErrors("gen.User was not found.");
+        }
 	}
 
 }

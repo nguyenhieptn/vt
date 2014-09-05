@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 @section('head')
 @parent
-{{ HTML::style("css/pages/units.css")}}
 @stop
 @section('content')
 <div class="row">
@@ -10,8 +9,8 @@
 
             <div class="widget widget-table action-table">
                 <div class="widget-header"> <i class="icon-th-list"></i>
-                    <h3>{{ trans("gen.unit list")}}</h3>
-                    <span class="pull-right"><a class="btn btn-small btn-success" href="{{ URL::route('units.create')}}">{{ trans("gen.add")}}</a></span>
+                    <h3>{{ trans("gen.user list")}}</h3>
+                    <span class="pull-right"><a class="btn btn-small btn-success" href="{{ URL::to('users/create')}}">{{ trans("gen.add")}}</a></span>
                 </div>
                 <!-- /widget-header -->
                 <div class="widget-content">
@@ -19,21 +18,20 @@
                         <thead>
                         <tr>
                             <th width="30px">ID</th>
-                            <th>{{ trans("gen.unit name")}}</th>
-
-                            <th>{{ trans("gen.unit type")}}</th>
+                            <th>{{ trans("gen.user name")}}</th>
+                            <th>{{ trans("gen.email")}}</th>
                             <th class="td-actions" width="100px"> {{ trans("gen.tools")}} </th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($units as $u)
+                        @foreach($users as $u)
                         <tr>
                             <td>{{ $u->id }}</td>
-                            <td>{{ $u->name }}</td>
-                            <td>{{ $u->unit_type }}</td>
+                            <td>{{ $u->username }}</td>
+                            <td>{{ $u->email }}</td>
                             <td class="td-actions">
-                                <a class="btn btn-small btn-success" href="{{ URL::to('units/' . $u->id. '/edit') }}"><i class="btn-icon-only icon-edit"> </i></a>
-                                {{ Form::open(array('route' => array('units.destroy', $u->id), 'method' => 'delete')) }}
+                                <a class="btn btn-small btn-success" href="{{ URL::to('users/' . $u->id. '/edit') }}"><i class="btn-icon-only icon-edit"> </i></a>
+                                {{ Form::open(array('route' => array('users.destroy', $u->id), 'method' => 'delete')) }}
                                 <button type="submit" class="btn btn-danger">x</button>
                                 {{ Form::close() }}
                             </td>

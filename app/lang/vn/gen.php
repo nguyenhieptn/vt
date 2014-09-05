@@ -13,5 +13,12 @@ return array(
     'edit unit'=>'Sửa đơn vị',
     'unit name'=>"Tên đơn vị",
     'save' =>'Lưu lại',
-    "noaccess" => " Không được  phép truy cập"
+    "noaccess" => " Không được  phép truy cập",
+
+    'unit type' => "Đơn vị",
+    'department' => "Phòng ban",
+    'user' => "Thành viên",
+    'users' => "Thành viên",
+    'user list' => "Danh sách Thành viên"
+
 );
