@@ -148,7 +148,19 @@ class UserController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+        $user = User::find($id);
+        $units = Unit::orderBy('unit_type')->get(['id','name']);
+
+        $unitList = array();
+        if(count($user->units)) {
+            foreach($user->units as $u){
+                $unitList[] = $u->id;
+            }
+        }
+
+        $user->unitList = $unitList;
+
+        return View::make('users.edit', compact('user','units'));
 	}
 
 	/**
