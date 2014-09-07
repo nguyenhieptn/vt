@@ -9,6 +9,10 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
 
 	use UserTrait, RemindableTrait;
 
+    public static $rules = [
+        'username' => 'required',
+        'email' => 'required'
+    ];
 	/**
 	 * The database table used by the model.
 	 *

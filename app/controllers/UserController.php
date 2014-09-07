@@ -172,7 +172,37 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($data = Input::except('_token','units','group'), User::$rules);
+
+        //unset password if they do not want to change
+        if ( !$data['password'] ) unset( $data['password'] );
+
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+
+
+
+        $user->update($data);
+
+        // Find the group using the group id
+        $userGroup = Sentry::findGroupByName(Input::get('group'));
+
+        // Assign the group to the user
+        $user->addGroup($userGroup);
+
+        // assign units user pivot, since the syntry uloquent doesn't support, we need to use extenders one
+        $units = Input::get("units");
+        if(count($units)) {
+            foreach($units as $u){
+                $user->units()->attach($u);
+            }
+        }
+
+        return Redirect::route('users.index');
 	}
 
 	/**
