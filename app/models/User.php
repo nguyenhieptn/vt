@@ -35,4 +35,9 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User {
         return $this->belongsToMany('unit');
     }
 
+    public function documents()
+    {
+        return $this->hasMany('document');
+    }
+
 }

@@ -27,5 +27,6 @@ Route::group(['before'=>"sentry"],function(){
 Route::group(array("before"=>"Sentry|inGroup:Admin"), function(){
     Route::resource("units","UnitsController");
     Route::resource("users","UserController");
+    Route::resource("documents","DocumentsController");
 
 });

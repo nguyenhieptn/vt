@@ -10,6 +10,13 @@
                 </a>
             </li>
             <li>
+                <a href="{{ URL::to('documents') }}">
+                    <i class="icon-envelope "></i>
+                    <span>{{ trans("gen.documents") }}</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="{{ URL::route('units.index') }}">
                     <i class="icon-table "></i>
                     <span>{{ trans("gen.unit") }}</span>
@@ -23,12 +30,6 @@
                 </a>
             </li>
 
-            <li>
-                <a href="guidely.html">
-                    <i class="icon-facetime-video"></i>
-                    <span>App Tour</span>
-                </a>
-            </li>
 
 
             <li>

@@ -73,7 +73,7 @@ class UserController extends \BaseController {
 
     public function index()
     {
-        $users = Sentry::findAllUsers();
+        $users = User::all();
 
         return View::make('users.index')->with(compact('users'));
     }
