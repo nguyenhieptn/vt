@@ -13,6 +13,11 @@ class Unit extends \Eloquent {
     //relationship to users table pivot user
     public function users()
     {
-        $this->belongsToMany('user');
+        return $this->belongsToMany('user');
+    }
+
+    public function documents()
+    {
+        return  $this->hasMany('document','from_unit_id','id');
     }
 }

@@ -8,7 +8,7 @@ class Document extends \Eloquent {
 	];
 
 	// Don't forget to fill this array
-    protected $fillable = ['title','description','user_id','from_user_id'];
+    protected $fillable = ['title','description','user_id','from_user_id','from_unit_id','files'];
 
     public function user(){
         return $this->belongsTo('user');

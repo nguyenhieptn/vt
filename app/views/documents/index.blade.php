@@ -20,20 +20,21 @@
                         <tr>
                             <th width="30px">ID</th>
                             <th>{{ trans("gen.document name")}}</th>
-
-                            <th>{{ trans("gen.document type")}}</th>
+                            <th>{{ trans("gen.document from")}}</th>
+                            <th>{{ trans("gen.document to")}}</th>
                             <th class="td-actions" width="100px"> {{ trans("gen.tools")}} </th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($documents as $u)
+                        @foreach($documents as $d)
                         <tr>
-                            <td>{{ $u->id }}</td>
-                            <td>{{ $u->title }}</td>
-                            <td>{{ $u->description }}</td>
+                            <td>{{ $d->id }}</td>
+                            <td>{{ $d->title }}</td>
+                            <td>{{ $d->fromUnit->name }}</td>
+                            <td>{{ $d->fromUnit->name }}</td>
                             <td class="td-actions">
-                                <a class="btn btn-small btn-success" href="{{ URL::to('documents/' . $u->id. '/edit') }}"><i class="btn-icon-only icon-edit"> </i></a>
-                                {{ Form::open(array('route' => array('documents.destroy', $u->id), 'method' => 'delete')) }}
+                                <a class="btn btn-small btn-success" href="{{ URL::to('documents/' . $d->id. '/edit') }}"><i class="btn-icon-only icon-edit"> </i></a>
+                                {{ Form::open(array('route' => array('documents.destroy', $d->id), 'method' => 'delete')) }}
                                 <button type="submit" class="btn btn-danger">x</button>
                                 {{ Form::close() }}
                             </td>

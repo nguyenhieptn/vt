@@ -38,13 +38,18 @@ class DocumentsController extends \BaseController {
 
         //files upload
         $files = Input::file('files');
-        var_dump($files);exit;
+        //var_dump($files);exit;
+        $filesName = array();
         foreach($files as $file) {
-            // public/uploads
-            $file->move('uploads/');
+            if(isset($file)){
+                // public/uploads
+                $file->name = uniqid()."_".$file->getClientOriginalName();
+                $filesName[] = $file->name;
+                $file->move('uploads/',$file->name);
+            }
         }
 
-
+        $data['files'] = json_encode($filesName);
 
 		if ($validator->fails())
 		{
