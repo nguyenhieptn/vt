@@ -42,7 +42,7 @@
                     </div> <!-- /controls -->
                     <br />
 
-                    <label class="control-label">Checkboxes</label>
+                    <label class="control-label">{{ trans("gen.units") }}</label>
 
                     <div class="controls">
                         @foreach($units as $u)

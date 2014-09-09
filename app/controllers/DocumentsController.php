@@ -9,7 +9,7 @@ class DocumentsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$documents = Document::all();
+		$documents = Document::orderBy('created_at','desc')->get();
 
 
 		return View::make('documents.index', compact('documents'));
@@ -56,9 +56,16 @@ class DocumentsController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
-		Document::create($data);
+		$doc = Document::create($data);
 
-		return Redirect::route('documents.index');
+        //dump pivot table units to
+        $units = Input::get('to_units_id');
+        if (count($units)){
+            $doc->units()->attach($units);
+        }
+
+
+        return Redirect::route('documents.index');
 	}
 
 	/**
@@ -83,8 +90,13 @@ class DocumentsController extends \BaseController {
 	public function edit($id)
 	{
 		$document = Document::find($id);
+        $units = Unit::orderBy('unit_type')->lists('name','id');
 
-		return View::make('documents.edit', compact('document'));
+        $unitList = array();
+        $unitList = $document->units()->lists('unit_id');
+        $document->unitList = $unitList;
+
+        return View::make('documents.edit', compact('document','units'));
 	}
 
 	/**

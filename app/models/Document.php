@@ -19,4 +19,9 @@ class Document extends \Eloquent {
         return $this->belongsTo('unit','from_unit_id','id','units');
     }
 
+    public function units()
+    {
+        return $this->belongsToMany('unit');
+    }
+
 }

@@ -66,7 +66,7 @@
             <div class="row">
 
                 <div class="span12">
-                    &copy; 2013 <a href="http://www.thainguyenpost.vn/">{{ trans("gen.buu dien thai nguyen") }}</a>.
+                    &copy; 2013 <a href="http://www.thainguyenpost.vn/">{{ trans("gen.company title") }}</a>.
                 </div> <!-- /span12 -->
 
             </div> <!-- /row -->

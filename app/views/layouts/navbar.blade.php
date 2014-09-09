@@ -9,7 +9,7 @@
         </a>
 
         <a class="brand" href="index.html">
-            {{ trans("gen.THAI NGUYEN POST") }}
+            {{ trans("gen.company title") }}
         </a>
 
         <div class="nav-collapse">

@@ -31,7 +31,14 @@
                             <td>{{ $d->id }}</td>
                             <td>{{ $d->title }}</td>
                             <td>{{ $d->fromUnit->name }}</td>
-                            <td>{{ $d->fromUnit->name }}</td>
+                            <td>
+
+                                @foreach($d->units as $u)
+                                    <ul>
+                                        <li>{{ $u->name }}</li>
+                                    </ul>
+                                @endforeach
+                            </td>
                             <td class="td-actions">
                                 <a class="btn btn-small btn-success" href="{{ URL::to('documents/' . $d->id. '/edit') }}"><i class="btn-icon-only icon-edit"> </i></a>
                                 {{ Form::open(array('route' => array('documents.destroy', $d->id), 'method' => 'delete')) }}

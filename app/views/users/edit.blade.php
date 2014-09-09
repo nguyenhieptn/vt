@@ -46,7 +46,6 @@
                         <div class="controls">
                             @foreach($units as $u)
                             <label class="checkbox list-group">
-                                <?php //var_dump($u->id); var_dump($user->unitList);var_dump();?>
                                 <input type="checkbox" name="units[]" value="{{ $u->id }}" <?php if(in_array($u->id,$user->unitList)) echo "checked='checked'"; ?> />{{ $u->name }}
                             </label>
                             @endforeach
