@@ -19,7 +19,7 @@ class UserController extends \BaseController {
 
     public function doLogin()
     {
-// validate the info, create rules for the inputs
+		// validate the info, create rules for the inputs
         $rules = array(
             'username'    => 'required|alphaNum', // username
             'password' => 'required|alphaNum|min:3' // password can only be alphanumeric and has to be greater than 3 characters
