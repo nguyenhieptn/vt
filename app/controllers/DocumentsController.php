@@ -9,7 +9,7 @@ class DocumentsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$documents = Document::orderBy('created_at','desc')->get();
+		$documents = Document::orderBy('created_at','desc')->paginate(5);
 
 
 		return View::make('documents.index', compact('documents'));
@@ -95,7 +95,6 @@ class DocumentsController extends \BaseController {
         $unitList = array();
         $unitList = $document->units()->lists('unit_id');
         $document->unitList = $unitList;
-
         return View::make('documents.edit', compact('document','units'));
 	}
 
@@ -109,14 +108,48 @@ class DocumentsController extends \BaseController {
 	{
 		$document = Document::findOrFail($id);
 
-		$validator = Validator::make($data = Input::all(), Document::$rules);
+        $data = Input::only('title','description','from_unit_id');
+
+		$validator = Validator::make($data, Document::$rules);
 
 		if ($validator->fails())
 		{
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
-		$document->update($data);
+        //Patch files
+
+        //files upload
+        $files = Input::file('files');
+        //if we have new file
+        if(isset($files)){
+
+            $filesName = array();
+            foreach($files as $file) {
+                if(isset($file)){
+                    // public/uploads
+                    $file->name = uniqid()."_".$file->getClientOriginalName();
+                    $filesName[] = $file->name;
+                    $file->move('uploads/',$file->name);
+                }
+            }
+            $currentFiles = json_decode($document->files);
+            if($currentFiles!=null)
+                $document->files  = json_encode(array_merge($currentFiles,$filesName));
+            else {
+                $document->files = json_encode($filesName);
+            }
+
+        }
+        $document->fill($data);
+		$document->save();
+
+        //dump pivot table units to
+        $units = Input::get('to_units_id');
+        $document->units()->detach();
+        if (count($units)){
+            $document->units()->attach($units);
+        }
 
 		return Redirect::route('documents.index');
 	}

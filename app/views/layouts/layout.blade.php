@@ -25,7 +25,13 @@
 </div> <!-- /navbar -->
 
 <div class="subnavbar">
-    @include("layouts.subnavbar")
+    @if(Sentry::getUser()->getGroups()->contains('5'))
+        @include("layouts.subnavbar")
+    @elseif(Sentry::getUser()->getGroups()->contains('6'))
+        @include("layouts.subnavbar_mem")
+    @else
+        no nav
+    @endif
 </div> <!-- /subnavbar -->
 
 <div class="main">

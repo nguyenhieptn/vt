@@ -24,4 +24,8 @@ class Document extends \Eloquent {
         return $this->belongsToMany('unit');
     }
 
+    public function scopeDocsFrom($query,$fromUnitID = array()){
+        return !(empty($fromUnitID)) ? $query->whereIn('from_unit_id',$fromUnitID):$query;
+    }
+
 }
