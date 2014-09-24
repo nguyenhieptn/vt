@@ -20,7 +20,13 @@ class MemberDocuments extends \BaseController {
 
     public function documentTo()
 	{
-		//
+        $user = Sentry::getUser();
+        $userUnit = array();
+        foreach($user->units as $u){
+            $userUnit[] = $u->id;
+        };
+        $documents = Document::docsTo($userUnit);
+        return View::make('memberdocuments.docto', compact('documents'));
 	}
 
 

@@ -9,7 +9,7 @@ class DocumentsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$documents = Document::orderBy('created_at','desc')->paginate(5);
+		$documents = Document::orderBy('created_at','desc')->with('fromUnit')->paginate(5);
 
 
 		return View::make('documents.index', compact('documents'));

@@ -1,5 +1,5 @@
 <?php
-
+require_once app_path('logger.php');
 /*
 |--------------------------------------------------------------------------
 | Register The Laravel Class Loader
