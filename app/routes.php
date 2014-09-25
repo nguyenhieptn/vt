@@ -38,5 +38,6 @@ Route::group(array("before"=>"Sentry|inGroup:admin"), function(){
     Route::resource("units","UnitsController");
     Route::resource("users","UserController");
     Route::resource("documents","DocumentsController");
+    Route::get("documents/{id}/deletefile","DocumentsController@removeFiles");
 
 });

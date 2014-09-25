@@ -9,7 +9,14 @@ class DocumentsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$documents = Document::orderBy('created_at','desc')->with('fromUnit')->paginate(5);
+        $search = Input::get("search");
+        $from = date("Y-m-d H:i:s",strtotime(Input::get("from")) );
+        $to = date("Y-m-d H:i:s",strtotime(Input::get("to")) );
+
+		$documents = Document::orderBy('created_at','desc')->with('fromUnit')
+                                ->search($search)
+                                ->dateBetween($from,$to)
+                                ->paginate(5);
 
 
 		return View::make('documents.index', compact('documents'));
@@ -151,8 +158,26 @@ class DocumentsController extends \BaseController {
             $document->units()->attach($units);
         }
 
-		return Redirect::route('documents.index');
+        return Redirect::back()->withInput();
 	}
+
+    public function removeFiles($id){
+        $document = Document::findOrFail($id);
+
+        $filePath = public_path().'/uploads/';
+
+        if($document->files != ''){
+            foreach(json_decode($document->files) as $f){
+                if (File::exists($filePath.$f)) {
+                    File::delete($filePath.$f);
+                }
+            }
+            $document->files = "";
+            $document->save();
+        }
+
+        return Redirect::back()->withInput();
+    }
 
 	/**
 	 * Remove the specified document from storage.

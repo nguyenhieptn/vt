@@ -1,9 +1,21 @@
 @extends('layouts.layout')
 @section('head')
 @parent
-{{ HTML::style("css/pages/documents.css")}}
+{{ HTML::style("css/datepicker.css")}}
 @stop
 @section('content')
+<div class="row">
+    <div class="span12">
+        <div class="widget">
+            {{ Form::open(array('route' => array('documents.index'), 'method' => 'get')) }}
+                <input  type="text" name="search" placeholder="Search" value="{{ Input::get('search') }}"/>
+                <input  type="text" class="form-control datepicker" name="from"  value="{{ Input::get('from') }}" placeholder="{{ trans("gen.from") }}"/>
+                <input  type="text" class="form-control datepicker" name="to"  value="{{ Input::get('to') }}" placeholder="{{ trans("gen.to") }}"/>
+                <input type="submit" value="{{ trans("gen.filter") }}" />
+            {{ Form::close() }}
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="span12">
         <div class="widget">
@@ -63,6 +75,12 @@
             {{ $documents->links() }}
     </div> <!-- /span12 -->
 </div> <!-- /row -->
-
-
+@stop
+@section('footer')
+@parent
+{{ HTML::script('js/bootstrap-datepicker.js') }}
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+    });
+</script>
 @stop

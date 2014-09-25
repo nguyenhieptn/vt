@@ -28,7 +28,7 @@ class Document extends \Eloquent {
         return !(empty($fromUnitID)) ? $query->whereIn('from_unit_id',$fromUnitID):$query;
     }
 
-    public static function scopeDocsTo($query, $unitList)
+    public function scopeDocsTo($query, $unitList)
     {
         $docs = DB::table('documents')
                     ->join('document_unit','documents.id','=','document_unit.document_id')
@@ -38,6 +38,23 @@ class Document extends \Eloquent {
                             'units.name AS fromunit'
                     )->paginate(5);
         return $docs;
+    }
+
+    public function scopeSearch($query,$search){
+        if($search) {
+            return $query->where("documents.title","LIKE","%$search%");
+        }else {
+            return $query;
+        }
+    }
+
+
+    public function scopeDateBetween($query,$from,$to){
+        if($from!="1970-01-01 00:00:00" && $to!="1970-01-01 00:00:00" ){
+            return $query->whereBetween("documents.created_at",[$from,$to]);
+        }else {
+            return $query;
+        }
     }
 
 }

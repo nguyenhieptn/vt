@@ -49,7 +49,7 @@
 
                             @foreach(json_decode($document->files) as $f)
                                 <a href="{{ URL::asset('uploads/'.$f) }}" >{{ $f }}</a>
-                            <a class="btn btn-small btn-success" href="{{ URL::to('documents/' . $f->id. '/deletefile') }}">x</a>
+                            <a class="btn btn-small btn-danger" href="{{ URL::to('documents/' . $document->id. '/deletefile') }}">x</a>
                                 <br />
                             @endforeach
 

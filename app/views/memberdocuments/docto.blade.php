@@ -24,7 +24,6 @@
                             <th width="30px">Date</th>
                             <th>{{ trans("gen.document name")}}</th>
                             <th>{{ trans("gen.document from")}}</th>
-                            <th>{{ trans("gen.document to")}}</th>
                             <th class="td-actions" width="100px"> {{ trans("gen.tools")}} </th>
                         </tr>
                         </thead>
@@ -35,8 +34,6 @@
                             <td>{{ $d->created_at }}</td>
                             <td>{{ $d->title }}</td>
                             <td>{{ $d->fromunit }}</td>
-                            <td>
-                            </td>
                             <td class="td-actions">
                             </td>
                         </tr>
