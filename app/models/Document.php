@@ -50,8 +50,19 @@ class Document extends \Eloquent {
 
 
     public function scopeDateBetween($query,$from,$to){
-        if($from!="1970-01-01 00:00:00" && $to!="1970-01-01 00:00:00" ){
-            return $query->whereBetween("documents.created_at",[$from,$to]);
+        $f = \Carbon\Carbon::parse($from);
+        $t = \Carbon\Carbon::parse($to);
+        if($f!="1970-01-01 00:00:00" && $t!="1970-01-01 00:00:00"){
+            if ($f == $t){
+                $t = $t->addDay();
+            }
+            return $query->whereBetween("documents.created_at",[$f,$t]);
+        }else if($f=="1970-01-01 00:00:00" && $t!="1970-01-01 00:00:00"){
+            return $query->whereRaw("DATE(documents.created_at) = '$t'");
+         }else if($f!="1970-01-01 00:00:00" && $t=="1970-01-01 00:00:00"){
+            //echo $f; exit;
+            return $query->whereRaw("DATE(documents.created_at) = '$f'");
+
         }else {
             return $query;
         }
