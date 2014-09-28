@@ -25,9 +25,9 @@
 </div> <!-- /navbar -->
 
 <div class="subnavbar">
-    @if(Sentry::getUser()->getGroups()->contains('5'))
+    @if(Sentry::getUser()->hasAccess('admin'))
         @include("layouts.subnavbar")
-    @elseif(Sentry::getUser()->getGroups()->contains('6'))
+    @elseif(Sentry::getUser()->hasAccess('member'))
         @include("layouts.subnavbar_mem")
     @else
         no nav
