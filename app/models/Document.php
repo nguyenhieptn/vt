@@ -28,16 +28,40 @@ class Document extends \Eloquent {
         return !(empty($fromUnitID)) ? $query->whereIn('from_unit_id',$fromUnitID):$query;
     }
 
-    public function scopeDocsTo($query, $unitList)
+
+    //query docsto
+    public function scopeDocsTo($query, $unitList,$search,$from,$to)
     {
-        $docs = DB::table('documents')
+        $query = DB::table('documents')
                     ->join('document_unit','documents.id','=','document_unit.document_id')
                     ->join('units','documents.from_unit_id','=','units.id')
                     ->whereIn('document_unit.unit_id',$unitList)
                     ->select('documents.*',
                             'units.name AS fromunit'
-                    )->paginate(5);
-        return $docs;
+                    );
+
+        //query search
+        if($search) {
+            $query->where("documents.title","LIKE","%$search%");
+        }
+
+        //query from to
+        $f = \Carbon\Carbon::parse($from);
+        $t = \Carbon\Carbon::parse($to);
+        if($f!="1970-01-01 00:00:00" && $t!="1970-01-01 00:00:00"){
+            if ($f == $t){
+                $t = $t->addDay();
+            }
+            $query->whereBetween("documents.created_at",[$f,$t]);
+        }else if($f=="1970-01-01 00:00:00" && $t!="1970-01-01 00:00:00"){
+            $query->whereRaw("DATE(documents.created_at) = '$t'");
+        }else if($f!="1970-01-01 00:00:00" && $t=="1970-01-01 00:00:00"){
+            //echo $f; exit;
+            $query->whereRaw("DATE(documents.created_at) = '$f'");
+
+        }
+
+        return $query;
     }
 
     public function scopeSearch($query,$search){
