@@ -28,6 +28,7 @@ Route::group(['before'=>"sentry"],function(){
 Route::group(['before'=>"sentry|inGroup:member"],function(){
     Route::get('docfrom','MemberDocuments@documentFrom');
     Route::get('docto','MemberDocuments@documentTo');
+    Route::get('document/{id}','MemberDocuments@show');
 });
 
 

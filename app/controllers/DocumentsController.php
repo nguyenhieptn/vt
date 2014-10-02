@@ -40,8 +40,13 @@ class DocumentsController extends \BaseController {
 	 */
 	public function store()
 	{
-        $validator = Validator::make($data = Input::except('_token','to_units_id'), Document::$rules);
+        $data = Input::except('_token','to_units_id');
 
+        $validator = Validator::make($data, Document::$rules);
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
         //files upload
         $files = Input::file('files');
@@ -57,11 +62,6 @@ class DocumentsController extends \BaseController {
         }
 
         $data['files'] = json_encode($filesName);
-
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
-		}
 
 		$doc = Document::create($data);
 

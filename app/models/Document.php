@@ -4,11 +4,13 @@ class Document extends \Eloquent {
 
 	// Add your validation rules here
 	public static $rules = [
-		// 'title' => 'required'
+         'title' =>'required',
+         'user_id' =>'required',
+		 //'files' => 'mimes:jpeg,bmp,png,pdf,doc,docx,xls,xlsx,txt'
 	];
 
 	// Don't forget to fill this array
-    protected $fillable = ['title','description','user_id','from_user_id','from_unit_id','files'];
+    protected $fillable = ['title','description','user_id','from_user_id','from_unit_id','files','read'];
 
     public function user(){
         return $this->belongsTo('user');
@@ -60,6 +62,9 @@ class Document extends \Eloquent {
             $query->whereRaw("DATE(documents.created_at) = '$f'");
 
         }
+
+        //order by
+        $query->orderBy("documents.created_at","desc");
 
         return $query;
     }
