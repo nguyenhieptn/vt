@@ -45,7 +45,12 @@
                         @foreach($documents as $d)
                         <tr>
                             <td>{{ $d->created_at }}</td>
-                            <td><a href="{{ URL::to("document/$d->id") }}" >{{ $d->title }}</a></td>
+                            <td>
+                                @if( in_array(Sentry::getUser()->id,(array)json_decode($d->read,true)) )
+                                    <a href="{{ URL::to("document/$d->id") }}" >{{ $d->title }}</a>
+                                @else
+                                    <b style="font-size: 15px"><a href="{{ URL::to("document/$d->id") }}" >{{ $d->title }}</a></b>
+                                @endif</td>
                             <td>{{ $d->fromUnit->name }}</td>
                             <td>
                                 @foreach($d->units as $u)
