@@ -51,5 +51,22 @@ class MemberDocuments extends \BaseController {
         return View::make('memberdocuments.docto', compact('documents'));
 	}
 
+    public function show($id){
+        $document = Document::find($id);
+        $uid = Sentry::getUser()->id;
+        //mark read
+        $readList = json_decode($document->read,true);
+        if(!in_array($uid,$readList)) {
+            $readList[] = $uid;
+            $document->read = json_encode($readList);
+            $document->save();
+        }
+
+
+
+        //update readed
+        return View::make('memberdocuments.show', compact('document'));
+    }
+
 
 }

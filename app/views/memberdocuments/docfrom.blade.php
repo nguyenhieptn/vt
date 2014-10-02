@@ -34,7 +34,6 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th width="30px">ID</th>
                             <th width="30px">Date</th>
                             <th>{{ trans("gen.document name")}}</th>
                             <th>{{ trans("gen.document from")}}</th>
@@ -45,16 +44,12 @@
                         <tbody>
                         @foreach($documents as $d)
                         <tr>
-                            <td>{{ $d->id }}</td>
                             <td>{{ $d->created_at }}</td>
-                            <td>{{ $d->title }}</td>
+                            <td><a href="{{ URL::to("document/$d->id") }}" >{{ $d->title }}</a></td>
                             <td>{{ $d->fromUnit->name }}</td>
                             <td>
-
                                 @foreach($d->units as $u)
-                                    <ul>
-                                        <li>{{ $u->name }}</li>
-                                    </ul>
+                                    {{ $u->name }},
                                 @endforeach
                             </td>
                             <td class="td-actions">
