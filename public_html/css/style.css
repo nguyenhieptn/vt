@@ -1299,3 +1299,17 @@ td.td-actions form button{
 }
 
 
+a.vt-documents-to i{
+    position:relative;
+}
+a.vt-documents-to i span.vt_number_docs{
+    color: #fff;
+    background: red;
+    font-size: 11px;
+    padding: 1px 4px;
+    border-radius: 10px;
+    position: absolute;
+    top: -3px;
+    right: -11px;
+}
+

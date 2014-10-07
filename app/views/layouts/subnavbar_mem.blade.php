@@ -9,9 +9,15 @@
             </li>
 
             <li>
-                <a href="{{ URL::to('docto') }}">
-                    <i class="icon-briefcase "></i>
-                    <span>{{ trans("gen.documents inbox") }}</span>
+                <a class="vt-documents-to" href="{{ URL::to('docto') }}">
+                    <i class="icon-briefcase ">
+                        @if(!empty($number))
+                        <span class="vt_number_docs" > {{$number}} </span>
+                        @endif
+                    </i>
+
+                    <span>{{ trans("gen.documents inbox") }}
+                    </span>
                 </a>
             </li>
             <li>

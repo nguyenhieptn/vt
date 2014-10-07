@@ -27,7 +27,9 @@ class MemberDocuments extends \BaseController {
             ->search($search)
             ->dateBetween($from,$to)
             ->paginate(5);
-        return View::make('memberdocuments.docfrom', compact('documents'));
+        $numberdocuments = Document::docsTo($userUnit,null,'1970-01-01 00:00:00','1970-01-01 00:00:00')
+            ->get();
+        return View::make('memberdocuments.docfrom', compact('documents','numberdocuments'));
 	}
 
     public function documentTo()
@@ -43,12 +45,13 @@ class MemberDocuments extends \BaseController {
         foreach($user->units as $u){
             $userUnit[] = $u->id;
         };
-
         //get data
         $documents = Document::docsTo($userUnit,$search,$from,$to)
                             ->paginate(5);
 
-        return View::make('memberdocuments.docto', compact('documents'));
+        $numberdocuments = Document::docsTo($userUnit,null,'1970-01-01 00:00:00','1970-01-01 00:00:00')
+                    ->get();
+        return View::make('memberdocuments.docto',compact('documents','numberdocuments'));
 	}
 
     public function show($id){
@@ -62,9 +65,18 @@ class MemberDocuments extends \BaseController {
             $document->read = json_encode($readList);
             $document->save();
         }
+        //init var
+        $user = Sentry::getUser();
 
+        //current units manage by this user
+        $userUnit = array();
+        foreach($user->units as $u){
+            $userUnit[] = $u->id;
+        };
+        $numberdocuments = Document::docsTo($userUnit,null,'1970-01-01 00:00:00','1970-01-01 00:00:00')
+            ->get();
         //update readed
-        return View::make('memberdocuments.show', compact('document'));
+        return View::make('memberdocuments.show', compact('document','numberdocuments'));
     }
 
 

@@ -175,7 +175,6 @@ class UserController extends \BaseController {
         $user = User::findOrFail($id);
 
         $validator = Validator::make($data = Input::except('_token','units','group'), User::$rules);
-
         //unset password if they do not want to change
         if ( !$data['password'] ) unset( $data['password'] );
 
@@ -196,9 +195,10 @@ class UserController extends \BaseController {
 
         // assign units user pivot, since the syntry uloquent doesn't support, we need to use extenders one
         $units = Input::get("units");
+        $user->units()->detach();
         if(count($units)) {
             foreach($units as $u){
-                $user->units()->attach($u);
+               $user->units()->attach($u);
             }
         }
 

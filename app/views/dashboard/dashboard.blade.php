@@ -1,3 +1,10 @@
+<?php
+$number=0;?>
+@foreach($numberdocuments as $d)
+@if( !in_array(Sentry::getUser()->id,(array)json_decode($d->read,true)) )
+<?php $number=$number+1; ?>
+@endif
+@endforeach
 @extends('layouts.layout')
 @section('content')
 <div class="row">

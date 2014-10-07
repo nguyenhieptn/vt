@@ -65,9 +65,9 @@ class Document extends \Eloquent {
 
         //order by
         $query->orderBy("documents.created_at","desc");
-
         return $query;
     }
+
 
     public function scopeSearch($query,$search){
         if($search) {
