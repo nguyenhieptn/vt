@@ -115,7 +115,7 @@ class DocumentsController extends \BaseController {
 	{
 		$document = Document::findOrFail($id);
 
-        $data = Input::only('title','description','from_unit_id');
+        $data = Input::only('title','user_id','description','from_unit_id');
 
 		$validator = Validator::make($data, Document::$rules);
 
