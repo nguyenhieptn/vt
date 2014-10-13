@@ -29,6 +29,7 @@ Route::group(['before'=>"sentry|inGroup:member"],function(){
     Route::get('docfrom','MemberDocuments@documentFrom');
     Route::get('docto','MemberDocuments@documentTo');
     Route::get('document/{id}','MemberDocuments@show');
+    Route::resource("memberdocuments","MemberDocuments");
 });
 
 
@@ -40,5 +41,6 @@ Route::group(array("before"=>"Sentry|inGroup:admin"), function(){
     Route::resource("users","UserController");
     Route::resource("documents","DocumentsController");
     Route::get("documents/{id}/deletefile","DocumentsController@removeFiles");
+    Route::get('pending','DocumentsController@documentPending');
 
 });

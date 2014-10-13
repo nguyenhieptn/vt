@@ -178,7 +178,30 @@ class DocumentsController extends \BaseController {
 
         return Redirect::back()->withInput();
     }
+    /**
+	 * update state for document 
+	 *
+	 */
+    public function documentPending()
+    {
+        //init var
+        $publish_id=Input::get("publish_id");
 
+        $user = Sentry::getUser();
+        $search = Input::get("search");
+        $from = date("Y-m-d H:i:s",strtotime(Input::get("from")) );
+        $to = date("Y-m-d H:i:s",strtotime(Input::get("to")) );
+
+        if($publish_id!=0){
+            Document::updatestatus($publish_id);
+        }
+
+        //get data
+        $documents = Document::docsPen($search,$from,$to)
+            ->paginate(50);
+       
+        return View::make('documents.pending', compact('documents'));
+    }
 	/**
 	 * Remove the specified document from storage.
 	 *

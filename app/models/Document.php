@@ -26,14 +26,15 @@ class Document extends \Eloquent {
         return $this->belongsToMany('unit');
     }
 
-    public function scopeDocsFrom($query,$fromUnitID = array()){
+    public function scopeDocsFrom($query,$fromUnitID = array()){  
         return !(empty($fromUnitID)) ? $query->whereIn('from_unit_id',$fromUnitID):$query;
+        
     }
 
 
     //query docsto
     public function scopeDocsTo($query, $unitList,$search,$from,$to)
-    {
+    {  
         $query = DB::table('documents')
                     ->join('document_unit','documents.id','=','document_unit.document_id')
                     ->join('units','documents.from_unit_id','=','units.id')
@@ -41,7 +42,7 @@ class Document extends \Eloquent {
                     ->select('documents.*',
                             'units.name AS fromunit'
                     );
-
+        $query->where("documents.state","=","1");
         //query search
         if($search) {
             $query->where("documents.title","LIKE","%$search%");
@@ -67,9 +68,51 @@ class Document extends \Eloquent {
         $query->orderBy("documents.created_at","desc");
         return $query;
     }
+     //query docspen
+    public function scopeDocsPen($query,$search,$from,$to){
+        $query = DB::table('documents')
+            ->where('state','=','0')
+            ->select('documents.*');
+        //if no unitList
 
+ 
+        //query search
+        if($search) {
+            $query->where("documents.title","LIKE","%$search%");
+        }
+
+        //query from to
+        $f = \Carbon\Carbon::parse($from);
+        $t = \Carbon\Carbon::parse($to);
+        if($f!="1970-01-01 00:00:00" && $t!="1970-01-01 00:00:00"){
+            if ($f == $t){
+                $t = $t->addDay();
+            }
+            $query->whereBetween("documents.created_at",[$f,$t]);
+        }else if($f=="1970-01-01 00:00:00" && $t!="1970-01-01 00:00:00"){
+            $query->whereRaw("DATE(documents.created_at) = '$t'");
+        }else if($f!="1970-01-01 00:00:00" && $t=="1970-01-01 00:00:00"){
+            //echo $f; exit;
+            $query->whereRaw("DATE(documents.created_at) = '$f'");
+
+        }
+
+        //order by
+        $query->orderBy("documents.created_at","desc");
+
+        return $query;
+    }
+    public static function updatestatus($id){
+        $documents = Document::find($id);
+
+        $documents->state = '1';
+
+        $documents->save();
+
+    }
 
     public function scopeSearch($query,$search){
+        $query->where("documents.state","=","1");
         if($search) {
             return $query->where("documents.title","LIKE","%$search%");
         }else {

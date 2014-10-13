@@ -29,6 +29,12 @@
                     <span>{{ trans("gen.users") }}</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ URL::to('pending') }}">
+                    <i class="icon-check-sign"></i>
+                    <span>{{ trans("gen.pending") }}</span>
+                </a>
+            </li>
         </ul>
 
     </div> <!-- /container -->
