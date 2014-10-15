@@ -9,7 +9,7 @@ class Dashboard extends \BaseController {
 	 * @return Response
 	 */
 	public function index()
-	{
+	{ 
         $user = Sentry::getUser();
 
         //this is the units where user manage
@@ -21,7 +21,7 @@ class Dashboard extends \BaseController {
         //get data
         $numberdocuments = Document::docsTo($userUnit,null,'1970-01-01 00:00:00','1970-01-01 00:00:00')
             ->get();
-
+ 
         if(!empty($numberdocuments)){
             return View::make("dashboard.dashboard",compact("numberdocuments"));
         }else{
@@ -29,4 +29,5 @@ class Dashboard extends \BaseController {
 
 	}
 
+}
 }
