@@ -38,16 +38,19 @@ class Document extends \Eloquent {
         $query = DB::table('documents')
                     ->join('document_unit','documents.id','=','document_unit.document_id')
                     ->join('units','documents.from_unit_id','=','units.id')
-                    ->whereIn('document_unit.unit_id',$unitList)
                     ->select('documents.*',
                             'units.name AS fromunit'
                     );
+        if(count($unitList)>0){
+            $userUnit=implode(',',$unitList);
+            $query->whereIn('document_unit.unit_id',$unitList);
+        }
         $query->where("documents.state","=","1");
         //query search
         if($search) {
             $query->where("documents.title","LIKE","%$search%");
         }
-
+        
         //query from to
         $f = \Carbon\Carbon::parse($from);
         $t = \Carbon\Carbon::parse($to);
@@ -63,9 +66,10 @@ class Document extends \Eloquent {
             $query->whereRaw("DATE(documents.created_at) = '$f'");
 
         }
-
+ 
         //order by
         $query->orderBy("documents.created_at","desc");
+        
         return $query;
     }
      //query docspen

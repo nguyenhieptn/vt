@@ -17,7 +17,7 @@ class Dashboard extends \BaseController {
         foreach($user->units as $u){
             $userUnit[] = $u->id;
         };
-
+        
         //get data
         $numberdocuments = Document::docsTo($userUnit,null,'1970-01-01 00:00:00','1970-01-01 00:00:00')
             ->get();
