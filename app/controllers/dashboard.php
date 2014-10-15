@@ -26,7 +26,6 @@ class Dashboard extends \BaseController {
             return View::make("dashboard.dashboard",compact("numberdocuments"));
         }else{
             return View::make("dashboard.dashboard");
-        }
 
 	}
 
