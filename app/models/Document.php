@@ -45,7 +45,7 @@ class Document extends \Eloquent {
             $userUnit=implode(',',$unitList);
             $query->whereIn('document_unit.unit_id',$unitList);
         }
-        $query->where("documents.state","=","1");
+        $query->where("documents.publish","=","1");
         //query search
         if($search) {
             $query->where("documents.title","LIKE","%$search%");
@@ -75,7 +75,7 @@ class Document extends \Eloquent {
      //query docspen
     public function scopeDocsPen($query,$search,$from,$to){
         $query = DB::table('documents')
-            ->where('state','=','0')
+            ->where('publish','=','0')
             ->select('documents.*');
         //if no unitList
 
@@ -109,14 +109,14 @@ class Document extends \Eloquent {
     public static function updatestatus($id){
         $documents = Document::find($id);
 
-        $documents->state = '1';
+        $documents->publish = '1';
 
         $documents->save();
 
     }
 
     public function scopeSearch($query,$search){
-        $query->where("documents.state","=","1");
+        $query->where("documents.publish","=","1");
         if($search) {
             return $query->where("documents.title","LIKE","%$search%");
         }else {
