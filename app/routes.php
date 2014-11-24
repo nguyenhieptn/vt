@@ -22,6 +22,7 @@ Route::post('/actionlogin','UserController@doLogin');
 Route::group(['before'=>"sentry"],function(){ 
     Route::get('dashboard',['as'=>'dashboard','uses'=>'dashboard@index']);
     Route::get('/logout','UserController@logout');
+    Route::get('/memberdocuments/logout','UserController@logout');
 });
 
 //member section
