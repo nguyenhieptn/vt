@@ -24,7 +24,8 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 $env = $app->detectEnvironment([
-    'hieplaptop' => 'NguyenHiep-Lap'
+    'hieplaptop' => 'NguyenHiep-Lap',
+   'yenexp' => array('YenLong-PC'),
 ]);
 
 /*

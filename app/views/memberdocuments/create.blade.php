@@ -29,18 +29,27 @@
 
                         <label for="group" class="control-label">{{ trans("gen.document from") }}</label>
                         <div class="controls">
+						
                             {{ Form::select('from_unit_id',$unitMembers,'member',['class'=>'control']) }}
                         </div><!-- /controls -->
                         <br />
                         <label class="control-label">{{ trans("gen.document to") }}</label>
                         <div class="controls">
-                            @foreach($units as $id=>$name)
+						@foreach($unitMembers as $key=>$value )
+						  <!-- <label class="checkbox list-group">
+						 {{ Form::checkbox('to_units_id[]',$key, false) }}
+                                {{ $value }}
+                            </label>
+						 @endforeach
+						  </controls -->
+                          @foreach($units as $id=>$name)
                             <label class="checkbox list-group">
                                 {{ Form::checkbox('to_units_id[]',$id, false) }}
                                 {{ $name }}
                             </label>
                             @endforeach
-                        </div><!-- /controls -->
+                       
+						</div>
                         <br />
                         <label class="control-label">{{ trans("gen.files") }}</label>
                         <div class="controls">
