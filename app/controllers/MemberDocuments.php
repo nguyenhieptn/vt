@@ -32,6 +32,25 @@ class MemberDocuments extends \BaseController {
         return View::make('memberdocuments.docfrom', compact('documents','numberdocuments'));
 	}
 
+	function countnew(){
+		$user = Sentry::getUser();
+        $search = Input::get("search");
+        $from = date("Y-m-d H:i:s",strtotime(Input::get("from")) );
+        $to = date("Y-m-d H:i:s",strtotime(Input::get("to")) );
+
+        //current units manage by this user
+        $userUnit = array();
+        foreach($user->units as $u){
+            $userUnit[] = $u->id;
+        };
+        //get data
+        $documents = Document::docsTo($userUnit,$search,$from,$to)
+                            ->paginate(5);
+
+        $numberdocuments = Document::docsTo($userUnit,null,'1970-01-01 00:00:00','1970-01-01 00:00:00')
+                    ->get();
+					
+	}
     public function documentTo()
 	{
         //init var
@@ -68,8 +87,10 @@ class MemberDocuments extends \BaseController {
             $unitMembers[$unit->id] = $unit->name;
 			};
 			$units = Unit::orderBy('unit_type')->lists('name','id');
+			$numberdocuments = Document::docsTo($userUnit,null,'1970-01-01 00:00:00','1970-01-01 00:00:00')
+                    ->get();
 
-			return View::make('memberdocuments.create',compact('units','unitMembers'));
+			return View::make('memberdocuments.create',compact('units','unitMembers','numberdocuments'));
 		}else{
 			return View::make('memberdocuments.blank');
 		}
