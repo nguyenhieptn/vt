@@ -26,6 +26,12 @@
                     <span>{{ trans("gen.documents sent") }}</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ URL::route('memberdocuments.create') }}">
+                    <i class="icon-pencil"></i>
+                    <span>{{ trans("gen.new document") }}</span>
+                </a>
+            </li>
         </ul>
     </div> <!-- /container -->
 </div> <!-- /subnavbar-inner -->

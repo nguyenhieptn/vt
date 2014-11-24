@@ -42,5 +42,4 @@ Route::group(array("before"=>"Sentry|inGroup:admin"), function(){
     Route::resource("documents","DocumentsController");
     Route::get("documents/{id}/deletefile","DocumentsController@removeFiles");
     Route::get('pending','DocumentsController@documentPending');
-
 });
