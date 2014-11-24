@@ -61,16 +61,23 @@ class MemberDocuments extends \BaseController {
         foreach($user->units as $u){
             $userUnit[] = $u->id;
         };
-	
-        $unitObjs = DB::table('units')->whereIn('id', $userUnit)->get();
-        $unitMembers=array();
-        foreach($unitObjs as $unit){
+		if(!empty($userUnit)){
+			  $unitObjs = DB::table('units')->whereIn('id', $userUnit)->get();
+			  $unitMembers=array();
+			foreach($unitObjs as $unit){
             $unitMembers[$unit->id] = $unit->name;
-        };
+			};
+			$units = Unit::orderBy('unit_type')->lists('name','id');
 
-        $units = Unit::orderBy('unit_type')->lists('name','id');
+			return View::make('memberdocuments.create',compact('units','unitMembers'));
+		}else{
+			return View::make('memberdocuments.blank');
+		}
+		
+      
+        
 
-        return View::make('memberdocuments.create',compact('units','unitMembers'));
+        
     }
     public function show($id){
         $document = Document::find($id);
