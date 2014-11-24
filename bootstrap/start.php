@@ -23,9 +23,9 @@ $app = new Illuminate\Foundation\Application;
 | given environment, then we will automatically detect it for you.
 |
 */
-$env = $app->detectEnvironment(function (){
-    return require __DIR__.'/environment.php';
-});
+$env = $app->detectEnvironment([
+    'hieplaptop' => 'NguyenHiep-Lap'
+]);
 
 /*
 |--------------------------------------------------------------------------
